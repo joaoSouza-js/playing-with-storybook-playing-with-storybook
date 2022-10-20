@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.0",
+    "@types/json-server": "^0.14.4",
+    "axios": "^1.1.3",
     "clsx": "^1.2.1",
     "phosphor-react": "^1.4.1",
     "react": "^18.2.0",

@@ -7,7 +7,7 @@ import { Avatar } from "./Avatar"
 import { Link } from "./Link"
 import { TextArea } from "./TextArea"
 import { Button } from "./Button"
-import { Trash } from "phosphor-react"
+import { Trash, ThumbsUp } from "phosphor-react"
 import { ActionButton } from "./ActionButton"
 
 export interface PostRootProps {
@@ -81,6 +81,8 @@ function PostContent({asChild,children,className}:PostContentProps){
         </Comp>
     )
 }
+
+PostContent.displayName = 'Post.Content'
 interface PostCreateProps {
     className?: string,
 }
@@ -103,7 +105,7 @@ function PostCreate({className}:PostCreateProps){
     )
 }
 
-PostContent.displayName = 'Post.Create'
+PostCreate.displayName = 'Post.Create'
 
 
 interface PostComentProps {
@@ -148,7 +150,7 @@ function PostComent({likesCounter,postContent,publisedAt,userName,avatarUrl,clas
                 <div>
                     <ActionButton.Root className="w-max">
                         <ActionButton.Icon>
-                            <Trash/>
+                            <ThumbsUp/>
                         </ActionButton.Icon>
                         <Text className="text-green-500 relative after:">aplaudir {likesCounter}</Text>
                     </ActionButton.Root>
