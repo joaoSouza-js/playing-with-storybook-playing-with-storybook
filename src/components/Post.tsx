@@ -9,6 +9,8 @@ import { TextArea } from "./TextArea"
 import { Button } from "./Button"
 import { Trash, ThumbsUp } from "phosphor-react"
 import { ActionButton } from "./ActionButton"
+import { formatDistanceToNow } from "date-fns"
+import ptBR from "date-fns/esm/locale/pt-BR/index.js"
 
 export interface PostRootProps {
     asChild?: boolean,
@@ -22,6 +24,15 @@ export function PostRoot({asChild,children,className}: PostRootProps){
             {children}
         </Comp>
     )
+}
+
+function timeIntervalFromNow(date: Date){
+    const interval = formatDistanceToNow(date, {
+        addSuffix: true,
+        locale: ptBR
+    })
+    
+    return interval
 }
 
 PostRoot.displayName = 'Post.Root'
@@ -58,7 +69,7 @@ interface PostHeaderProps {
 
            </div>
            <Text size="sm" asChild className="text-gray-300">
-                <time>{publisedAt}</time>
+                <time>{timeIntervalFromNow(new Date(publisedAt))}</time>
            </Text>
         </header>
     )
@@ -109,15 +120,22 @@ PostCreate.displayName = 'Post.Create'
 
 
 interface PostComentProps {
-    postContent: string,
+    postId: number
+    commentContent: string,
     userName: string,
     publisedAt: string,
     avatarUrl: string,
     className?: string
     likesCounter: number,
+    updatePostLikes: (postId: number) => void
     
 }
-function PostComent({likesCounter,postContent,publisedAt,userName,avatarUrl,className}:PostComentProps){
+function PostComent({postId, likesCounter,commentContent,publisedAt,userName,avatarUrl,className,updatePostLikes}:PostComentProps){
+    function handleUpdatePostLikes(){
+        updatePostLikes(postId)
+    }
+
+
     return(
         <section className={clsx('flex gap-4 w-full',className)}>
             <Avatar src={avatarUrl}/>
@@ -130,7 +148,7 @@ function PostComent({likesCounter,postContent,publisedAt,userName,avatarUrl,clas
                             </Text>
                             <Text size="xs" asChild className="text-gray-300" >
                                 <time>
-                                    {publisedAt}
+                                    {timeIntervalFromNow(new Date(publisedAt))}
                                 </time>
 
                             </Text>
@@ -144,11 +162,11 @@ function PostComent({likesCounter,postContent,publisedAt,userName,avatarUrl,clas
                         </ActionButton.Root>
                     </header>
                     <Text asChild size="sm" className="mt-4">
-                        <p>{postContent}</p>
+                        <p>{commentContent}</p>
                     </Text>
                 </div>
                 <div>
-                    <ActionButton.Root className="w-max">
+                    <ActionButton.Root onClick={handleUpdatePostLikes} className="w-max">
                         <ActionButton.Icon>
                             <ThumbsUp/>
                         </ActionButton.Icon>

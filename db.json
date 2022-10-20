@@ -1,44 +1,62 @@
 {
-    "posts":[
+  "posts": [
+    {
+      "id": 1,
+      "avatarUrl": "https://github.com/joao472762.png",
+      "coverUrl": "https://source.unsplash.com/collection/928423/280x280",
+      "userName": "João Victor de Souza",
+      "userRole": "Desenvolvedor Web",
+      "publishedAt": "Wed Oct 19 2022 17:20:00 GMT-0300 (Horário Padrão de Brasília)",
+      "postContent": "eu aprendi a utilzar o JSON SERVER",
+      "likes": 3,
+      "comments": [
         {
-            "id": 1,
-            "avatarUrl": "https://github.com/joao472762.png",
-            "coverUrl": "https://source.unsplash.com/collection/928423/280x280",
-            "userName": "João Victor de Souza",
-            "userRole": "Desenvolvedor Web",
-            "publishedAt": "Wed Oct 19 2022 17:20:00 GMT-0300 (Horário Padrão de Brasília)",
-            "postContent": "eu aprendi a utilzar o JSON SERVER",
-            "likes": 0
-        },
-        {
-            "id": 2,
-            "avatarUrl": "https://github.com/joao472762.png",
-            "coverUrl": "https://source.unsplash.com/collection/928423/280x280",
-            "userName": "João Victor de Souza",
-            "userRole": "Desenvolvedor Web",
-            "publishedAt": "Wed Oct 19 2022 17:20:00 GMT-0300 (Horário Padrão de Brasília)",
-            "postContent": "eu aprendi a utilzar o JSON SERVER",
-            "likes": 0
+          "id": 1,
+          "avatarUrl": "https://github.com/joao472762.png",
+          "userName": "amanda Aguiar",
+          "publishedAt": "Wed Oct 19 2022 17:20:00 GMT-0300 (Horário Padrão de Brasília)",
+          "comment": "gostei muito da aplicação",
+          "postId": 1
         }
-    ],
-    "comments": [
+      ]
+    },
+    {
+      "id": 2,
+      "avatarUrl": "https://github.com/joao472762.png",
+      "coverUrl": "https://source.unsplash.com/collection/928423/280x280",
+      "userName": "João Victor de Souza",
+      "userRole": "Desenvolvedor Web",
+      "publishedAt": "Wed Oct 19 2022 17:20:00 GMT-0300 (Horário Padrão de Brasília)",
+      "postContent": "eu aprendi a utilzar o JSON SERVER",
+      "likes": 4,
+      "comments": [
         {
-            "id": 1,
-            "avatarUrl": "https://github.com/joao472762.png",
-            "userName": "amanda Aguiar",
-            "publishedAt": "Wed Oct 19 2022 17:20:00 GMT-0300 (Horário Padrão de Brasília)",
-            "comment": "gostei muito da aplicação",
-            "postId": 1
-        },
-        {
-            "id": 2,
-            "avatarUrl": "https://github.com/joao472762.png",
-            "userName": "amanda Aguiar",
-            "publishedAt": "Wed Oct 19 2022 17:20:00 GMT-0300 (Horário Padrão de Brasília)",
-            "comment": "gostei muito da aplicação",
-            "postId": 2
+          "id": 2,
+          "avatarUrl": "https://github.com/joao472762.png",
+          "userName": "amanda Aguiar",
+          "publishedAt": "Wed Oct 19 2022 17:20:00 GMT-0300 (Horário Padrão de Brasília)",
+          "comment": "gostei muito da aplicação",
+          "postId": 2
         }
-    ]
+      ]
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "avatarUrl": "https://github.com/joao472762.png",
+      "userName": "amanda Aguiar",
+      "publishedAt": "Wed Oct 19 2022 17:20:00 GMT-0300 (Horário Padrão de Brasília)",
+      "comment": "gostei muito da aplicação",
+      "postId": 1
+    },
+    {
+      "id": 2,
+      "avatarUrl": "https://github.com/joao472762.png",
+      "userName": "amanda Aguiar",
+      "publishedAt": "Wed Oct 19 2022 17:20:00 GMT-0300 (Horário Padrão de Brasília)",
+      "comment": "gostei muito da aplicação",
+      "postId": 2
+    }
+  ]
 }
-
-

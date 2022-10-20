@@ -8,7 +8,7 @@ import { Profile } from "../components/Profile";
 import { EditButton } from "../components/EditButton";
 
 interface PostsProps {
-  id: 1,
+  id: number,
   avatarUrl: string,
   coverUrl: string,
   userName: string,
@@ -34,6 +34,31 @@ export function Home(){
     async function getPosts(){
         const response = await Axios.get('/posts?_embed=comments')
         setPosts(response.data)
+    }
+
+    async function updatePostLikes(postId: number) {
+        const post = posts.find(post => post.id === postId)
+        
+        if(post){
+
+            const postWithMoreOneLike = {
+                ...post,
+                likes: post.likes + 1
+            }
+           
+            
+            const postsUpdated = posts.map(state => {
+                if(state.id === postWithMoreOneLike.id){
+                    return postWithMoreOneLike
+                }
+                return state
+            })
+            
+            setPosts(postsUpdated)
+            Axios.put(`/posts/${postId}`,postWithMoreOneLike)
+        }
+
+
     }
 
     useEffect(()=>{
@@ -74,28 +99,33 @@ export function Home(){
                 <section className="flex flex-col gap-6 flex-1">
                     {
                         posts.map(({comments,...post}) => (
+
                             <Post.Root key={post.id} className="flex-1">
                                 <Post.Header
                                     avatarUrl={post.avatarUrl}
-                                    publisedAt="publicado há 2 dias"
+                                    publisedAt={post.publishedAt}
                                     userName={post.userName}
                                     userRole={post.userRole}
                                 />
                                 <Post.Content>
                                     <Text asChild>
                                         <p>{post.postContent}</p>
-                                    </Text>
+                                    </Text> 
                                 </Post.Content>
                                 <Post.Create />
+
                                 {
                                     comments.map(comment => (
                                         <Post.Coment
-                                            key={comment.id}
+                                            key={comment.id
+                                            }
+                                            postId={post.id}
+                                            updatePostLikes={updatePostLikes}
                                             avatarUrl={comment.avatarUrl}
                                             className="mt-8"
                                             likesCounter={post.likes}
-                                            postContent={comment.comment}
-                                            publisedAt="Cerca de 2h"
+                                            commentContent={comment.comment}
+                                            publisedAt={comment.publishedAt}
                                             userName={comment.userName}
                                         />
                                     ))

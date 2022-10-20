@@ -77,10 +77,12 @@ export const WithComents: StoryObj<PostRootProps> = {
         </Post.Content>,
         <Post.Create/>,
         <Post.Coment
+            postId={3}
+            updatePostLikes={() => {}}
             className='mt-8'
             avatarUrl="https://github.com/joao472762.png"
             likesCounter={3}
-            postContent ={'se liga no novo post'}
+            commentContent ={'se liga no novo post'}
             publisedAt = 'Cerca de 2h'
             userName="Amanda"
             
