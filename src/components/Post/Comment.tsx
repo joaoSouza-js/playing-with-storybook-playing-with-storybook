@@ -9,7 +9,8 @@ import { Avatar } from "../Avatar"
 import { Text } from "../Text"
 
 interface PostComentProps {
-    postId: number
+    postId: number,
+    commentId: number
     commentContent: string,
     userName: string,
     publisedAt: string,
@@ -19,11 +20,14 @@ interface PostComentProps {
     
 }
 
-export function PostComent({postId, likesCounter,commentContent,publisedAt,userName,avatarUrl,className}:PostComentProps){
-    const {updatePostLikes} = useContext(PostContext)
+export function PostComent({postId, commentId, likesCounter,commentContent,publisedAt,userName,avatarUrl,className}:PostComentProps){
+    const {updateCommentLikes,deleteOneComment} = useContext(PostContext)
     
     function handleUpdatePostLikes(){
-        updatePostLikes(postId)
+        updateCommentLikes(postId, commentId)
+    }
+    function handleDeleteOneComment(){
+        deleteOneComment(postId, commentId)
     }
 
     function timeIntervalFromNow(date: Date){
@@ -55,7 +59,7 @@ export function PostComent({postId, likesCounter,commentContent,publisedAt,userN
 
                         </div>
                         
-                        <ActionButton.Root className="w-min h-min ">
+                        <ActionButton.Root title="Lixeira" onClick={handleDeleteOneComment} className="w-min h-min ">
                             <ActionButton.Icon>
                                 <Trash/>
                             </ActionButton.Icon>
@@ -66,7 +70,7 @@ export function PostComent({postId, likesCounter,commentContent,publisedAt,userN
                     </Text>
                 </div>
                 <div>
-                    <ActionButton.Root onClick={handleUpdatePostLikes} className="w-max">
+                    <ActionButton.Root  title="Like" onClick={handleUpdatePostLikes} className="w-max">
                         <ActionButton.Icon>
                             <ThumbsUp/>
                         </ActionButton.Icon>

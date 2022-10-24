@@ -56,17 +56,21 @@ export function Home(){
                                         <p>{post.postContent}</p>
                                     </Text> 
                                 </Post.Content>
-                                <Post.Create />
+                                <Post.Create 
+                                    avatarUrl={post.avatarUrl}
+                                    userName={post.userName}
+                                    postId={post.id}
+                                />
 
                                 {
                                     comments.map(comment => (
                                         <Post.Coment
-                                            key={comment.id
-                                            }
+                                            key={comment.id}
+                                            commentId={comment.id}
                                             postId={post.id}
                                             avatarUrl={comment.avatarUrl}
                                             className="mt-8"
-                                            likesCounter={post.likes}
+                                            likesCounter={comment.likes}
                                             commentContent={comment.comment}
                                             publisedAt={comment.publishedAt}
                                             userName={comment.userName}
