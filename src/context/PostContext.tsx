@@ -1,107 +1,41 @@
-import { createContext, ReactNode, useEffect, useState } from "react"
+import { createContext, ReactNode, useEffect, useReducer, useState } from "react"
+
 import { Axios } from "../libs.axios"
+import { commentProps, PostProps, PostReducer } from "../reducers/post/reducer"
+import { 
+    updatePostAction, 
+    createNewCommentAction, 
+    deleteOneCommentAction, 
+    increaseCommentLikesAction, 
+} from "../reducers/post/actions"
 
 interface PostContextProviderProps {
     children: ReactNode
 }
 
-export interface commentProps {
-    id: number,
-    avatarUrl: string,
-    userName: string
-    publishedAt: string
-    comment: string,
-    postId: number,
-    likes: number,
-}
-
-interface PostProps {
-    id: number,
-    avatarUrl: string,
-    coverUrl: string,
-    userName: string,
-    userRole: string,
-    publishedAt: string,
-    postContent: string,
-    comments: commentProps[]
-}
-
-
 interface PostContextType  {
     posts: PostProps[],
-    updateCommentLikes: (postId: number,commentId: number) => void,
-    addNewComment: (newComment: commentProps, postId:number) => void,
+    increaseCommentLikes: (postId: number,commentId: number) => void,
+    createNewComment: (newComment: commentProps, postId:number) => void,
     deleteOneComment: (postId: number,commentId: number) => void
 }
 
 export const PostContext = createContext({} as PostContextType)
 
-
-
 export function PostContextProvider({children}:PostContextProviderProps){
-    const [posts,setPosts] = useState<PostProps[]>([])
+  const [posts, dispatch] = useReducer(PostReducer, [])
 
     async function getPosts(){
         const response = await Axios.get('/posts?_embed=comments')
-        setPosts(response.data)
+        dispatch(updatePostAction(response.data))
     }
 
-    async function updateCommentLikes(postId: number,commentId: number) {
-        console.log(postId)
-        try {
-            const post = posts.find(post => postId === post.id)
-            console.log(post)
-            if(post){
-    
-                const commentsUpdated = post.comments.map(comment => {
-                    if(comment.id === commentId){
-                        const commentWithMoreOneLike = {
-                            ...comment,
-                            likes: comment.likes + 1
-    
-                        }
-                        Axios.put(`/comments/${commentId}`,commentWithMoreOneLike)
-                        return commentWithMoreOneLike
-                    }
-                    return comment
-                })
-                
-                const postWithCommentsUpdated = {
-                    ...post,
-                    comments: commentsUpdated
-                }
-    
-                const postsUpdated = posts.map(state => {
-                    if(state.id === post.id){
-                        return postWithCommentsUpdated
-                    }
-                    return state
-                })
-    
-                setPosts(postsUpdated)
-                
-            }
-            
-        } catch (error) {
-            
-        }
+    async function increaseCommentLikes(postId: number,commentId: number) {  
+        dispatch(increaseCommentLikesAction(commentId, postId))     
+       
     }
 
-     function addNewComment(newComment: commentProps, postId:number){
-
-        const postsWithMoreOneComment = posts.map(post => {
-            if(postId === post.id){
-                const comments = post.comments
-                const postUptdated = {
-                    ...post,
-                    comments: [...comments, newComment]
-                }
-                return postUptdated
-            }
-
-            return post
-        })
-        
+    async function createNewComment(newComment: commentProps, postId:number){
         const newCommentWithoutCommentId = {
             postId: newComment.postId,
             avatarUrl: newComment.avatarUrl,
@@ -110,35 +44,15 @@ export function PostContextProvider({children}:PostContextProviderProps){
             comment: newComment.comment,
             likes: newComment.likes,
         }
-
-        Axios.post(`/comments`,newCommentWithoutCommentId)
-        setPosts(postsWithMoreOneComment)    
+     
+        const response = await Axios.post(`/comments`,newCommentWithoutCommentId)
+        dispatch(createNewCommentAction(postId, response.data))
     }
 
-    function deleteOneComment(postId: number,commentId: number){
-        const postToRemoveOneComment = posts.find(post => post.id === postId)
-
-        if(postToRemoveOneComment){
-            const commentsWithoutOneComment = postToRemoveOneComment.comments.filter(comment => comment.id !== commentId)
-
-            const postsUpdated = posts.map(post => {
-                if(post.id === postToRemoveOneComment.id ){
-                    const postWithOneCommentRemoved : PostProps = {
-                        ...postToRemoveOneComment,
-                        comments: commentsWithoutOneComment
-
-                    }
-                    return postWithOneCommentRemoved
-                }
-                return post
-            })
-
-            setPosts(postsUpdated)
-            Axios.delete(`/comments/${commentId}`)
-            
-        }
+    function deleteOneComment(postId: number,commentId: number){   
+        dispatch(deleteOneCommentAction(commentId,postId))
+        Axios.delete(`/comments/${commentId}`)
     }
-
 
     useEffect(()=>{
         getPosts()
@@ -146,7 +60,7 @@ export function PostContextProvider({children}:PostContextProviderProps){
 
     return (
         <PostContext.Provider value={
-            {posts, updateCommentLikes, addNewComment, deleteOneComment}
+            {posts, increaseCommentLikes, createNewComment, deleteOneComment}
         }>
             {children}
         </PostContext.Provider>

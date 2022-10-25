@@ -21,10 +21,10 @@ interface PostComentProps {
 }
 
 export function PostComent({postId, commentId, likesCounter,commentContent,publisedAt,userName,avatarUrl,className}:PostComentProps){
-    const {updateCommentLikes,deleteOneComment} = useContext(PostContext)
+    const {increaseCommentLikes,deleteOneComment} = useContext(PostContext)
     
     function handleUpdatePostLikes(){
-        updateCommentLikes(postId, commentId)
+        increaseCommentLikes(postId, commentId)
     }
     function handleDeleteOneComment(){
         deleteOneComment(postId, commentId)

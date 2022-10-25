@@ -24,7 +24,12 @@ export default {
                         </p>
                     </Text>
                 </Post.Content>,
-                <Post.Create/>
+                <Post.Create
+                    avatarUrl='https://github.com/joao472762.png'
+                    postId={3}
+                    userName='amanda'
+
+                />
         ]
     },
     argTypes: {
@@ -51,7 +56,12 @@ export const WithoutHeader : StoryObj<PostRootProps> = {
                         </p>
                     </Text>
                 </Post.Content>,
-                <Post.Create/>
+                <Post.Create
+                    avatarUrl='https://github.com/joao472762.png'
+                    postId={3}
+                    userName='amanda'
+
+                />
         ]
     }
 }
@@ -75,10 +85,15 @@ export const WithComents: StoryObj<PostRootProps> = {
                 </p>
             </Text>
         </Post.Content>,
-        <Post.Create/>,
+        <Post.Create
+            avatarUrl='https://github.com/joao472762.png'
+            postId={3}
+            userName='amanda'
+
+        />,
         <Post.Coment
             postId={3}
-            updatePostLikes={() => {}}
+            commentId={3}
             className='mt-8'
             avatarUrl="https://github.com/joao472762.png"
             likesCounter={3}

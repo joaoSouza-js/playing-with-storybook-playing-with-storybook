@@ -1,6 +1,8 @@
 import clsx from "clsx"
 import { ChangeEvent, FormEvent, FormEventHandler, FormHTMLAttributes, useContext, useId, useState } from "react"
-import { commentProps,PostContext } from "../../context/PostContext"
+import { PostContext } from "../../context/PostContext"
+import { commentProps } from "../../reducers/post/reducer"
+
 import { Button } from "../Button"
 import { Text } from "../Text"
 import { TextArea } from "../TextArea"
@@ -13,7 +15,7 @@ interface PostCreateProps {
 }
 
 export function PostCreate({className,avatarUrl,postId,userName}:PostCreateProps){
-    const {addNewComment} = useContext(PostContext)
+    const {createNewComment} = useContext(PostContext)
     const [textComment, setTextComment] = useState('')
     const [isDisable,setIsDisable] = useState(false)
 
@@ -38,7 +40,7 @@ export function PostCreate({className,avatarUrl,postId,userName}:PostCreateProps
             likes: 0
         }
 
-        addNewComment(newComment,postId)
+        createNewComment(newComment,postId)
         
         setIsDisable(false)
     }

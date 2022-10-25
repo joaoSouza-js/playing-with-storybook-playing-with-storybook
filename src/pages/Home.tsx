@@ -39,50 +39,58 @@ export function Home(){
                         </footer>
                     </Profile.Content>
                 </Profile.Root>
+
+                {
+                    posts && (
+
+                    <section className="flex flex-col gap-6 flex-1">
+                        {
+                            posts.map(({comments,...post}) => (
+
+                                <Post.Root key={post.id} className="flex-1">
+                                    <Post.Header
+                                        avatarUrl={post.avatarUrl}
+                                        publisedAt={post.publishedAt}
+                                        userName={post.userName}
+                                        userRole={post.userRole}
+                                    />
+                                    <Post.Content>
+                                        <Text asChild>
+                                            <p>{post.postContent}</p>
+                                        </Text> 
+                                    </Post.Content>
+                                    <Post.Create 
+                                        avatarUrl={post.avatarUrl}
+                                        userName={post.userName}
+                                        postId={post.id}
+                                    />
+
+                                    {
+                                        comments.map(comment => (
+                                            <Post.Coment
+                                                key={comment.id}
+                                                commentId={comment.id}
+                                                postId={post.id}
+                                                avatarUrl={comment.avatarUrl}
+                                                className="mt-8"
+                                                likesCounter={comment.likes}
+                                                commentContent={comment.comment}
+                                                publisedAt={comment.publishedAt}
+                                                userName={comment.userName}
+                                            />
+                                        ))
+                                    }
+                                </Post.Root>
+
+                            ))
+                        }
+
+                        
+
+                    </section>
+                    )
+                }
                 
-                <section className="flex flex-col gap-6 flex-1">
-                    {
-                        posts.map(({comments,...post}) => (
-
-                            <Post.Root key={post.id} className="flex-1">
-                                <Post.Header
-                                    avatarUrl={post.avatarUrl}
-                                    publisedAt={post.publishedAt}
-                                    userName={post.userName}
-                                    userRole={post.userRole}
-                                />
-                                <Post.Content>
-                                    <Text asChild>
-                                        <p>{post.postContent}</p>
-                                    </Text> 
-                                </Post.Content>
-                                <Post.Create 
-                                    avatarUrl={post.avatarUrl}
-                                    userName={post.userName}
-                                    postId={post.id}
-                                />
-
-                                {
-                                    comments.map(comment => (
-                                        <Post.Coment
-                                            key={comment.id}
-                                            commentId={comment.id}
-                                            postId={post.id}
-                                            avatarUrl={comment.avatarUrl}
-                                            className="mt-8"
-                                            likesCounter={comment.likes}
-                                            commentContent={comment.comment}
-                                            publisedAt={comment.publishedAt}
-                                            userName={comment.userName}
-                                        />
-                                    ))
-                                }
-                            </Post.Root>
-
-                        ))
-                    }
-
-                </section>
 
             </div>
            

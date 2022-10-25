@@ -21,8 +21,6 @@ export function PostRoot({asChild,children,className}: PostRootProps){
     )
 }
 
-
-
 export const Post = {
     Root: PostRoot,
     Header: PostHeader,
